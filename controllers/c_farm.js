@@ -6,9 +6,13 @@ exports.getTemp = async (req, res, next) => {
     try {
         const farmData = await Farm.findOne({})
 
+        console.log('farmData', farmData)
+
         res.status(200).json({
             message: 'Fetched latest temperature',
             temp: farmData.temp,
+
+            updatedAt: farmData.updatedAt
         });
     } catch (err) {
         if (!err.statusCode) {
@@ -23,7 +27,8 @@ exports.getHumidity = async (req, res, next) => {
         const farmData = await Farm.findOne({})
         res.status(200).json({
             message: 'Fetched latest Humidity',
-            temp: farmData.humidity,
+            humidity: farmData.humidity,
+            updatedAt: farmData.updatedAt
         });
     } catch (err) {
         if (!err.statusCode) {
@@ -40,7 +45,8 @@ exports.getMoisture = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Fetched latest Moisture',
-            temp: farmData.moisture,
+            moisture: farmData.moisture,
+            updatedAt: farmData.updatedAt
         });
     } catch (err) {
         if (!err.statusCode) {
@@ -57,7 +63,8 @@ exports.getLight = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Fetched latest Light',
-            temp: farmData.light,
+            light: farmData.light,
+            updatedAt: farmData.updatedAt
         });
     } catch (err) {
         if (!err.statusCode) {
