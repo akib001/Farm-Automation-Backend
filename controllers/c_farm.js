@@ -11,7 +11,6 @@ exports.getTemp = async (req, res, next) => {
         res.status(200).json({
             message: 'Fetched latest temperature',
             temp: farmData.temp,
-
             updatedAt: farmData.updatedAt
         });
     } catch (err) {
