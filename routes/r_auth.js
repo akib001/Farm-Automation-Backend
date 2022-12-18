@@ -1,72 +1,44 @@
 const express = require('express');
 const {body} = require('express-validator/check');
-const isAdmin = require('../middleware/is-admin');
-const isUser = require('../middleware/is-user')
-const passport = require('passport');
+const isConsumer = require('../middleware/is-consumer');
+const isFarmer = require('../middleware/is-farmer')
 
 const authController = require('../controllers/c_auth');
 
 const router = express.Router();
 
-const clientUrl = process.env.NODE_ENV === 'production' ? process.env.CLIENT_URL_PROD : process.env.CLIENT_URL_DEV;
-
 const signupValidation = [
-    body('email')
-        .isEmail()
-        .withMessage('Please enter a valid email.')
-        .normalizeEmail(),
+    body('mobile')
+        .trim().isLength({min: 11, max: 11})
+        .withMessage('Please enter a valid mobile.'),
     body('password').trim().isLength({min: 5}).withMessage('Please enter a strong password.'),
     body('name').isLength({min: 3, max: 50}).withMessage('Please enter your valid name').trim().not().isEmpty(),
 ]
 
 const loginValidation = [
-    body('email')
-        .isEmail()
-        .withMessage('Please enter a valid email.')
-        .normalizeEmail(),
+    body('mobile')
+        .trim().isLength({min: 11, max: 11})
+        .withMessage('Please enter a valid mobile.'),
     body('password').trim()
 ]
 
 // Put => User signup
-router.put('/user/signup', signupValidation, authController.userSignup);
+router.put('/farmer/signup', signupValidation, authController.farmerSignup);
 
 // Post => User Login
-router.post('/user/login', authController.userLogin);
+router.post('/farmer/login', authController.farmerLogin);
 
 // GET => User Logout
 router.get('/user/logout', authController.userLogout);
 
 // Put => Admin signup
-router.put('/admin/signup', signupValidation, authController.adminSignup);
+router.put('/consumer/signup', signupValidation, authController.consumerSignup);
 
 // Post => Admin Login
-router.post('/admin/login', authController.adminLogin);
+router.post('/consumer/login', authController.consumerLogin);
 
 // GET => auth/check-auth
 router.get('/check-auth', authController.checkAuth)
 
-router.get(
-    '/google',
-    passport.authenticate('google', {
-        scope: ['profile', 'email'],
-    }),
-);
-
-router.get(
-    '/google/callback',
-    passport.authenticate('google', {
-        failureRedirect: '/',
-        session: false,
-    }),
-    (req, res) => {
-        const token = req.user.generateJWT();
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-        })
-        res.redirect(clientUrl);
-    },
-);
 
 module.exports = router;

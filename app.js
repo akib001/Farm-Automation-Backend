@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require("cors");
 const farmRoutes = require('./routes/r_farm');
+const authRoutes = require('./routes/r_auth')
 
 const app = express();
 
@@ -11,10 +12,15 @@ app.use(bodyParser.json()); // application/json
 app.use(express.urlencoded({extended: true}));
 
 app.use(
-    cors()
+    cors({
+        origin: ['http://localhost:3000'],
+        methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
+        credentials: true,
+    })
 );
 
 app.use('/farm', farmRoutes);
+app.use('/auth', authRoutes);
 
 
 app.use((error, req, res, next) => {
