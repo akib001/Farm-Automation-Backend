@@ -10,6 +10,8 @@ router.get('/humidity', farmController.getHumidity);
 router.get('/moisture', farmController.getMoisture);
 router.get('/light', farmController.getLight);
 
+router.get('/all-farm-data', farmController.fetchAllFarmData);
+
 router.post('/create-farmdata', farmController.postFarmData);
 
 module.exports = router;

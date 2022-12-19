@@ -7,7 +7,6 @@ exports.fetchConsumersList = async (req, res, next) => {
         const consumers = await User.find({role: 'consumer'}, {
             name: 1,
             mobile: 1,
-            password: 1,
             division: 1,
             district: 1,
             upazila: 1,
