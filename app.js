@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require("cors");
 const farmRoutes = require('./routes/r_farm');
+const farmerRoutes = require('./routes/r_farmer');
 const authRoutes = require('./routes/r_auth')
 
 const app = express();
@@ -21,7 +22,7 @@ app.use(
 
 app.use('/farm', farmRoutes);
 app.use('/auth', authRoutes);
-app.use('/farmer', farmRoutes);
+app.use('/farmer', farmerRoutes);
 
 
 app.use((error, req, res, next) => {

@@ -1,11 +1,11 @@
 const express = require('express');
 
-const farmController = require('../controllers/c_farm');
+const farmerController = require('../controllers/c_farmer');
 
 const router = express.Router();
 
 // GET /farmer/fetch-consumers-list
-router.get('/fetch-consumers-list', farmController.fetchConsumersList);
+router.get('/fetch-consumers-list', farmerController.fetchConsumersList);
 
 
 module.exports = router;

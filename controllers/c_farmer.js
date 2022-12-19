@@ -4,7 +4,8 @@ const User = require('../models/m_user');
 
 exports.fetchConsumersList = async (req, res, next) => {
     try {
-        const consumers = await User.find({role: 'farmer'}, {name,
+        const consumers = await User.find({role: 'consumer'}, {
+            name: 1,
             mobile: 1,
             password: 1,
             division: 1,
@@ -14,6 +15,8 @@ exports.fetchConsumersList = async (req, res, next) => {
             demand: 1,
             quantity: 1,
         })
+
+        console.log('FIND RESULTS', consumers);
 
         res.status(200).json({
             message: 'Consumers List successfully.',
