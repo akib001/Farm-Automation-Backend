@@ -18,7 +18,7 @@ const userSchema = new Schema({
         type: String,
     }, daily_production: {
         type: String,
-    }, demand: {
+    }, npm : {
         type: String,
     }, quantity: {
         type: Number,

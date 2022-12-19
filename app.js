@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(
     cors({
-        origin: ['http://localhost:3000'],
+        origin: ['http://localhost:3000', 'http://localhost:3002'],
         methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
         credentials: true,
     })
@@ -21,6 +21,7 @@ app.use(
 
 app.use('/farm', farmRoutes);
 app.use('/auth', authRoutes);
+app.use('/farmer', farmRoutes);
 
 
 app.use((error, req, res, next) => {
