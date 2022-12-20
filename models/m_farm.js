@@ -18,6 +18,10 @@ const farmSchema = new Schema(
       light: {
       type: Number,
       required: true,
+    },
+      farmer_id: {
+      type: String,
+      required: true,
     }
   },
   { timestamps: true }

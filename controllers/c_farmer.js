@@ -7,7 +7,6 @@ exports.fetchConsumersList = async (req, res, next) => {
         const consumers = await User.find({role: 'consumer'}, {
             name: 1,
             mobile: 1,
-            password: 1,
             division: 1,
             district: 1,
             upazila: 1,
@@ -21,6 +20,34 @@ exports.fetchConsumersList = async (req, res, next) => {
         res.status(200).json({
             message: 'Consumers List successfully.',
             consumers: consumers,
+        });
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
+
+exports.fetchFarmersList = async (req, res, next) => {
+    try {
+        const farmers = await User.find({role: 'farmer'}, {
+            name: 1,
+            mobile: 1,
+            password: 1,
+            division: 1,
+            district: 1,
+            upazila: 1,
+            village: 1,
+            daily_production: 1,
+            quantity: 1,
+        })
+
+        console.log('FIND RESULTS', farmers);
+
+        res.status(200).json({
+            message: 'Consumers List successfully.',
+            farmers: farmers,
         });
     } catch (err) {
         if (!err.statusCode) {

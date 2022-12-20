@@ -2,6 +2,55 @@ const {validationResult} = require('express-validator/check');
 const mongoose = require('mongoose');
 const Farm = require('../models/m_farm');
 
+exports.getSingleFarmData = async (req, res, next) => {
+    const farmerId = req.params.farmerId;
+    console.log("farmerId", farmerId)
+    try {
+        const farmData = await Farm.findOne({farmer_id: farmerId})
+
+        if (!farmData) {
+            const error = new Error('No farm Data Found');
+            error.statusCode = 404;
+            throw error;
+        }
+
+        res.status(200).json({
+            message: 'Fetched latest farm data',
+            data: farmData,
+            updatedAt: farmData?.updatedAt
+        });
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
+
+exports.getAllFarmData = async (req, res, next) => {
+    const farmerId = req.params.farmerId;
+    try {
+        const farmData = await Farm.find({farmer_id: farmerId})
+
+        if (!farmData) {
+            const error = new Error('No farm Data Found');
+            error.statusCode = 404;
+            throw error;
+        }
+
+        res.status(200).json({
+            message: 'Fetched all farm data',
+            data: farmData,
+        });
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
+
+
 exports.getTemp = async (req, res, next) => {
     try {
         const farmData = await Farm.findOne({})

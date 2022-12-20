@@ -27,9 +27,11 @@ exports.farmerSignup = async (req, res, next) => {
         role
     } = req.body;
 
+    const farmerId = Math.floor(Math.random() * 90000 + 10000);
+
     try {
         // finding user with same mobile
-        const user = await User.findOne({email: mobile});
+        const user = await User.findOne({mobile: mobile});
 
         // if mobile already exists!
         if (user) {
@@ -51,6 +53,7 @@ exports.farmerSignup = async (req, res, next) => {
             name: name,
             mobile: mobile,
             password: hashedpw,
+            farmer_id: farmerId,
             division: division,
             district: district,
             upazila: upazila,
@@ -94,34 +97,22 @@ exports.farmerLogin = async (req, res, next) => {
             throw error;
         }
 
-        if (fetchedConsumer.role == 'farmer') {
+        if (fetchedUser.role !== 'farmer') {
             const error = new Error("You don't have farmer role");
             error.statusCode = 401;
             throw error;
         }
 
         const token = jwt.sign({
-            mobile: loadedUser.mobile, userId: loadedUser._id.toString(), name: loadedUser.name,
+            mobile: loadedUser.mobile, userId: loadedUser.farmer_id, name: loadedUser.name,
             role: 'farmer',
         }, process.env.accessTokenSecret, {expiresIn: '24h'});
 
         res
             .status(200)
             .json({
-                token: token, userId: loadedUser._id.toString(), name: loadedUser.name, mobile: mobile, role: 'farmer',
+                token: token, userId: loadedUser.farmer_id, name: loadedUser.name, mobile: mobile, role: 'farmer',
             });
-    } catch (err) {
-        if (!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
-    }
-};
-
-exports.userLogout = async (req, res, next) => {
-    try {
-        res.clearCookie('token').clearCookie('role');
-        res.status(201).json({message: 'User Logout Successfully', logout: true});
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -158,7 +149,7 @@ exports.consumerSignup = async (req, res, next) => {
         // if Mobile address already exists!
         if (fetchedUser) {
             if (fetchedUser.role !== 'farmer') {
-                const error = new Error('Mobile already exists in farmer role! ');
+                const error = new Error('User does not have farmer role!');
                 throw error;
             }
 

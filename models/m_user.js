@@ -8,6 +8,8 @@ const userSchema = new Schema({
         type: String, trim: true, minlength: 6, maxlength: 60,
     }, name: {
         type: String, required: true,
+    }, farmer_id: {
+        type: String
     }, division: {
         type: String,
     }, district: {
@@ -18,7 +20,7 @@ const userSchema = new Schema({
         type: String,
     }, daily_production: {
         type: String,
-    }, npm : {
+    }, npm: {
         type: String,
     }, quantity: {
         type: Number,

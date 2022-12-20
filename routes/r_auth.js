@@ -28,9 +28,6 @@ router.put('/farmer/signup', signupValidation, authController.farmerSignup);
 // Post => User Login
 router.post('/farmer/login', authController.farmerLogin);
 
-// GET => User Logout
-router.get('/user/logout', authController.userLogout);
-
 // Put => Admin signup
 router.put('/consumer/signup', signupValidation, authController.consumerSignup);
 
