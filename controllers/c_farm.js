@@ -55,8 +55,6 @@ exports.getTemp = async (req, res, next) => {
     try {
         const farmData = await Farm.findOne({})
 
-        console.log('farmData', farmData)
-
         res.status(200).json({
             message: 'Fetched latest temperature',
             temp: farmData.temp,
@@ -112,6 +110,23 @@ exports.getLight = async (req, res, next) => {
         res.status(200).json({
             message: 'Fetched latest Light',
             light: farmData.light,
+            updatedAt: farmData.updatedAt
+        });
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
+
+exports.fetchAllFarmData = async (req, res, next) => {
+    try {
+        const farmData = await Farm.find({})
+
+        res.status(200).json({
+            message: 'Fetched all farm data',
+            farmData: farmData,
             updatedAt: farmData.updatedAt
         });
     } catch (err) {

@@ -10,6 +10,8 @@ router.get('/get-single-farm-data/:farmerId', farmController.getSingleFarmData);
 // GET /farm/get-all-farm-data/:farmerId
 router.get('/get-all-farm-data/:farmerId', farmController.getAllFarmData);
 
+router.get('/all-farm-data', farmController.fetchAllFarmData);
+
 router.post('/create-farmdata', farmController.postFarmData);
 
 module.exports = router;
