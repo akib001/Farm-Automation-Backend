@@ -15,7 +15,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(
     cors({
-        origin: ['https://farm-automation.netlify.app/', 'http://localhost:3000', 'http://localhost:3002'],
+        origin: ['https://farm-automation.netlify.app', 'http://localhost:3000', 'http://localhost:3002'],
         methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
         credentials: true,
     })
