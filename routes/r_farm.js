@@ -13,3 +13,4 @@ router.get('/get-all-farm-data/:farmerId', farmController.getAllFarmData);
 router.post('/create-farmdata', farmController.postFarmData);
 
 module.exports = router;
+
